@@ -3,10 +3,27 @@ const bcrypt = require('bcryptjs')
 const { signJWTAccessToken } = require('../utils/apiAuthorization.js')
 const { v4: uuidv4 } = require('uuid')
 
+function compareBcryptAsync(param1, param2) {
+  return new Promise(function (resolve, reject) {
+    bcrypt.compare(param1, param2, function (err, res) {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(res)
+      }
+    })
+  })
+}
+
 const login = async (req, res) => {
   const user = req.body
+
   const userData = await UserModel.findOne({ email: user.username })
-  if (userData && bcrypt.compare(user.password, userData.password)) {
+
+  if (
+    userData &&
+    (await compareBcryptAsync(user.password, userData.password))
+  ) {
     const { password, ...userInfo } = userData
     const accessToken = signJWTAccessToken(userInfo)
     const { password: pwd, ...userDetails } = userInfo._doc
