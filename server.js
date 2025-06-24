@@ -9,7 +9,6 @@ const server = express()
 server.use(express.json({ limit: '200mb', extended: true }))
 server.use(express.urlencoded({ limit: '200mb', extended: true }))
 server.use(cors())
-server.use('/images', express.static(path.join(__dirname, 'uploads')))
 
 //user routes
 const usersRoutes = require('./routes/users')
