@@ -1,5 +1,6 @@
-const { NoteModel } = require('../models/notes')
+const { NoteModel } = require('../models/notes.js')
 const { v4: uuidv4 } = require('uuid')
+const moment = require('moment')
 
 const getNotes = async (req, res) => {
   const notes = await NoteModel.find({ isArchived: false }).sort({
@@ -10,7 +11,8 @@ const getNotes = async (req, res) => {
 
 const createNote = async (req, res) => {
   const note = req.body
-  const newNote = new NoteModel({ id: uuidv4(), ...note })
+  const date = moment().format('DD/MM/YYYY')
+  const newNote = new NoteModel({ id: uuidv4(), createdAt: date, ...note })
   try {
     const resp = await newNote.save()
     return res.json(resp)
