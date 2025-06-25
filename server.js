@@ -14,6 +14,10 @@ server.use(cors())
 const usersRoutes = require('./routes/users')
 server.use('/user', usersRoutes)
 
+//notes routes
+const notesRoutes = require('./routes/notes')
+server.use('/notes', notesRoutes)
+
 //server listening at port 5000
 const PORT = process.env.PORT || 5000
 mongoose.set('strictQuery', true)
