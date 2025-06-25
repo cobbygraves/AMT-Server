@@ -32,7 +32,10 @@ const login = async (req, res) => {
       accessToken
     })
   } else {
-    return res.json(null)
+    res.status(400).json({
+      error: 'Login Failed',
+      message: 'Wrong username or password'
+    })
   }
 }
 
@@ -56,6 +59,5 @@ const register = async (req, res) => {
 
 module.exports = {
   login,
-
   register
 }
