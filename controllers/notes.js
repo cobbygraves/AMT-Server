@@ -71,6 +71,18 @@ const getTagNotes = async (req, res) => {
   return res.json(notes)
 }
 
+const searchNotes = async (req, res) => {
+  const query = req.query.term
+  // console.log(query)
+  const notes = await NoteModel.find({
+    $or: [
+      { title: { $regex: query, $options: 'i' } },
+      { content: { $regex: query, $options: 'i' } }
+    ]
+  })
+  return res.json(notes)
+}
+
 module.exports = {
   getNotes,
   createNote,
@@ -79,5 +91,6 @@ module.exports = {
   updateNote,
   deleteNote,
   getArchivedNotes,
-  getTagNotes
+  getTagNotes,
+  searchNotes
 }

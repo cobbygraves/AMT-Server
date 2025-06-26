@@ -7,13 +7,15 @@ const {
   updateNote,
   deleteNote,
   getArchivedNotes,
-  getTagNotes
+  getTagNotes,
+  searchNotes
 } = require('../controllers/notes')
 
 const router = express.Router()
 router.get('/', getNotes)
 router.post('/create', createNote)
 router.get('/archived', getArchivedNotes)
+router.get('/search', searchNotes)
 router.get('/:id/archive', archiveNote)
 router.get('/:id', getSingleNote)
 router.put('/:id', updateNote)
