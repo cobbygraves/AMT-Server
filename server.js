@@ -18,6 +18,10 @@ server.use('/user', usersRoutes)
 const notesRoutes = require('./routes/notes')
 server.use('/notes', notesRoutes)
 
+//tags routes
+const tagsRoutes = require('./routes/tags')
+server.use('/tags', tagsRoutes)
+
 //server listening at port 5000
 const PORT = process.env.PORT || 5000
 mongoose.set('strictQuery', true)

@@ -65,6 +65,12 @@ const getArchivedNotes = async (req, res) => {
   return res.json(notes)
 }
 
+const getTagNotes = async (req, res) => {
+  const tag = req.params.tag
+  const notes = await NoteModel.find({ tags: { $in: [tag] } })
+  return res.json(notes)
+}
+
 module.exports = {
   getNotes,
   createNote,
@@ -72,5 +78,6 @@ module.exports = {
   getSingleNote,
   updateNote,
   deleteNote,
-  getArchivedNotes
+  getArchivedNotes,
+  getTagNotes
 }
