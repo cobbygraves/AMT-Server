@@ -60,11 +60,18 @@ const deleteNote = async (req, res) => {
   }
 }
 
+const getArchivedNotes = async (req, res) => {
+  const notes = await NoteModel.find({ isArchived: true })
+  console.log(notes)
+  return res.json(notes)
+}
+
 module.exports = {
   getNotes,
   createNote,
   archiveNote,
   getSingleNote,
   updateNote,
-  deleteNote
+  deleteNote,
+  getArchivedNotes
 }
