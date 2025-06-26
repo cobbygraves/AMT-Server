@@ -50,10 +50,21 @@ const updateNote = async (req, res) => {
   }
 }
 
+const deleteNote = async (req, res) => {
+  const noteId = req.params.id
+  try {
+    const resp = await NoteModel.deleteOne({ id: noteId })
+    return res.json(resp)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+}
+
 module.exports = {
   getNotes,
   createNote,
   archiveNote,
   getSingleNote,
-  updateNote
+  updateNote,
+  deleteNote
 }
