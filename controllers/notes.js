@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid')
 const moment = require('moment')
 
 const getNotes = async (req, res) => {
-  const notes = await NoteModel.find({}).sort({
+  const notes = await NoteModel.find({ isArchived: false }).sort({
     createdAt: -1
   })
   return res.json(notes)
