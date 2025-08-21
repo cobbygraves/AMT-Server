@@ -1,0 +1,42 @@
+name: Deploy to Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Zip project
+        run: zip -r app.zip . -x "*.git*" "node_modules/*"
+
+      - name: Upload to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl private --delete
+          source_dir: .
+        env:
+          AWS_S3_BUCKET: bedmate-server
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: us-east-1
+
+      # - name: Deploy to Elastic Beanstalk
+      #   run: |
+      #     aws elasticbeanstalk create-application-version \
+      #       --application-name bedmate-server \
+      #       --version-label v-${{ github.run_number }}-$(date +%s) \
+      #       --source-bundle S3Bucket=bedmate-server,S3Key=app.zip
+
+      #     aws elasticbeanstalk update-environment \
+      #       --environment-name bedmate-server-env \
+      #       --version-label v-${{ github.run_number }}-$(date +%s)
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     AWS_REGION: us-east-1
