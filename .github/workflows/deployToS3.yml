@@ -26,17 +26,17 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-east-1
 
-      # - name: Deploy to Elastic Beanstalk
-      #   run: |
-      #     aws elasticbeanstalk create-application-version \
-      #       --application-name rmeocnis-note-taking-server \
-      #       --version-label v-${{ github.run_number }}-$(date +%s) \
-      #       --source-bundle S3Bucket=rmeocnis-note-taking-server,S3Key=app.zip
+      - name: Deploy to Elastic Beanstalk
+        run: |
+          aws elasticbeanstalk create-application-version \
+            --application-name rmeocnis-note-taking-server \
+            --version-label v-${{ github.run_number }}-$(date +%s) \
+            --source-bundle S3Bucket=rmeocnis-note-taking-server,S3Key=app.zip
 
-      #     aws elasticbeanstalk update-environment \
-      #       --environment-name rmeocnis-note-taking-server-env \
-      #       --version-label v-${{ github.run_number }}-$(date +%s)
-      #   env:
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     AWS_REGION: us-east-1
+          aws elasticbeanstalk update-environment \
+            --environment-name rmeocnis-note-taking-server-env \
+            --version-label v-${{ github.run_number }}-$(date +%s)
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: us-east-1
